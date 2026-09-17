@@ -54,6 +54,7 @@ MAT_KHAU_UNG_DUNG = "30032011@Nam"  # Mật khẩu ứng dụng tạo từ Gmail
 message = f"[TARO CAM - THƯ KHẨN]\n👤 Người gửi: {ten_lop}\n\n📝 Nội dung tâm sự:\n{noi_dung}"
 
 # Đoạn code tự động kết nối và gửi Gmail
+# Đoạn code tự động kết nối và gửi Gmail
 try:
     msg = MIMEText(message, _charset="utf-8")
     msg["Subject"] = "Taro Cam - Thông báo tâm sự khẩn từ học sinh"
@@ -68,6 +69,3 @@ try:
     st.balloons()
 except Exception as e:
     st.error(f"Lỗi gửi thư: {e}")
-            st.balloons()
-        else:
-            st.warning("Cậu chưa nhập nội dung thư kìa!")
