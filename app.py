@@ -25,18 +25,16 @@ if menu == "1. Tâm sự cùng bộ đôi Taro & Mây":
     if st.button("Gửi tâm sự và Trò chuyện cùng AI"):
         if ten_lop and noi_dung:
             with st.spinner("Bộ đôi Taro & Mây đang lắng nghe và suy nghĩ lời khuyên cho cậu..."):
-               url = "https://pollinations.ai"
+                url = "https://pollinations.ai"
+                prompt = f"Bạn là Taro và Mây Hồng an ủi học sinh lớp {ten_lop}: {noi_dung}"
                 try:
-                    # Gửi tin nhắn dạng dữ liệu (json) để không bị lỗi dấu tiếng Việt
                     response = requests.post(url, json={"messages": [{"role": "user", "content": prompt}]})
                     if response.status_code == 200:
-                        ai_reply = response.text
-
                         st.subheader("💌 Lời khuyên từ bộ đôi Taro & Mây dành cho cậu:")
-                        st.info(ai_reply)
+                        st.info(response.text)
                         st.balloons()
                     else:
-                        st.error("Hệ thống AI đang bận, cậu vui lòng thử lại sau chút nhé!")
+                        st.error("Hệ thống AI đang bận, cậu thử lại sau nhé!")
                 except Exception as e:
                     st.error(f"Lỗi kết nối AI: {e}")
         else:
