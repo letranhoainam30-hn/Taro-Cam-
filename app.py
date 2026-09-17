@@ -11,7 +11,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🍁 Taro Cam - Hệ Thống Hũ Trợ Tâm Lý Học Đường")
+st.title("🍁 Taro Cam - Hệ Thống Hỗ Trợ Tâm Lý Học Đường")
 st.subheader("Trò chuyện thông minh cùng Khoai Môn & Mây Hồng (AI)")
 
 menu = st.radio("Chọn chức năng:", ["1. Tâm sự cùng bộ đôi Taro & Mây", "2. Hòm thư ẩn danh"])
@@ -25,17 +25,11 @@ if menu == "1. Tâm sự cùng bộ đôi Taro & Mây":
     if st.button("Gửi tâm sự và Trò chuyện cùng AI"):
         if ten_lop and noi_dung:
             with st.spinner("Bộ đôi Taro & Mây đang lắng nghe và suy nghĩ lời khuyên cho cậu..."):
-                url = "https://pollinations.ai"
-                prompt = (
-                    f"Bạn là bộ đôi chuyên gia tâm lý học đường Taro và Mây Hồng. "
-                    f"Hãy đọc tâm sự sau của một bạn học sinh lớp {ten_lop}: '{noi_dung}'. "
-                    f"Hãy đưa ra lời khuyên, sự an ủi thật ấm áp, thân thiện, đồng cảm dưới danh nghĩa là người bạn Taro và Mây Hồng. "
-                    f"Cách xưng hô: Gọi học sinh là 'cậu' hoặc 'bạn', xưng là 'Taro & Mây' hoặc 'tớ'. Trả lời hoàn toàn bằng tiếng Việt mượt mà."
-                )
+                url = f"https://pollinations.ai{requests.utils.quote(noi_dung)}"
                 try:
-                    response = requests.post(url, json={"messages": [{"role": "user", "content": prompt}]})
-                    if response.status_code == 200:
-                        ai_reply = response.json()["choices"][0]["message"]["content"]
+                    response = requests.get(url)
+                    if response.status_code == 200 and response.text:
+                        ai_reply = response.text
                         st.subheader("💌 Lời khuyên từ bộ đôi Taro & Mây dành cho cậu:")
                         st.info(ai_reply)
                         st.balloons()
@@ -51,7 +45,7 @@ elif menu == "2. Hòm thư ẩn danh":
     noi_dung_an_danh = st.text_area("Nhập tâm sự ẩn danh của cậu vào đây:")
     if st.button("Gửi ẩn danh"):
         if noi_dung_an_danh:
-st.success("Gửi thư ẩn danh thành công! Bí mật của cậu sẽ được giữ kín.")
+            st.success("Gửi thư ẩn danh thành công! Bí mật của cậu sẽ được giữ kín.")
             st.balloons()
         else:
             st.warning("Vui lòng nhập nội dung trước khi gửi.")
