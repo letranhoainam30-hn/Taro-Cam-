@@ -25,11 +25,13 @@ if menu == "1. Tâm sự cùng bộ đôi Taro & Mây":
     if st.button("Gửi tâm sự và Trò chuyện cùng AI"):
         if ten_lop and noi_dung:
             with st.spinner("Bộ đôi Taro & Mây đang lắng nghe và suy nghĩ lời khuyên cho cậu..."):
-                url = f"https://pollinations.ai{requests.utils.quote(noi_dung)}"
+               url = "https://pollinations.ai"
                 try:
-                    response = requests.get(url)
-                    if response.status_code == 200 and response.text:
+                    # Gửi tin nhắn dạng dữ liệu (json) để không bị lỗi dấu tiếng Việt
+                    response = requests.post(url, json={"messages": [{"role": "user", "content": prompt}]})
+                    if response.status_code == 200:
                         ai_reply = response.text
+
                         st.subheader("💌 Lời khuyên từ bộ đôi Taro & Mây dành cho cậu:")
                         st.info(ai_reply)
                         st.balloons()
